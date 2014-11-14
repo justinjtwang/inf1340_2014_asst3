@@ -19,6 +19,13 @@ monthly_averages = []
 
 
 def read_stock_data(stock_name, stock_file_name):
+    global stock_data
+    stock_data = read_json_from_file(stock_file_name)
+
+
+def get_monthly_averages():
+    global stock_data
+    global monthly_averages
     return
 
 
