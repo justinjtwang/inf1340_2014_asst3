@@ -5,8 +5,8 @@
 Assignment 3,INF1340 Fall 2014
 """
 
-__author__ = 'Susan Sim'
-__email__ = "ses@drsusansim.org"
+__author__ = 'Xiwen Zhou, Juntian Wang,Susan Sim'
+__email__ = "xw.zhou@mail.utoronto.ca,,ses@drsusansim.org"
 
 __copyright__ = "2014 Susan Sim"
 __license__ = "MIT License"
@@ -48,6 +48,7 @@ class StockMiner:
         """
         for daily_data in self.stock_data:
             if daily_data["Date"][0:7] in self.dic_monthly:
+                #Sorts data on monthly basis while adding up for average calculation later
                 self.dic_monthly[daily_data["Date"][0:7]][0] += daily_data["Close"]*daily_data["Volume"]
                 self.dic_monthly[daily_data["Date"][0:7]][1] += daily_data["Volume"]
             else:
@@ -55,23 +56,29 @@ class StockMiner:
 
         for month in self.dic_monthly:
             self.monthly_averages_list.append((month.replace("-", "/"), round(self.dic_monthly[month][0] / self.dic_monthly[month][1], 2)))
+            #Caculates monthly averages and put them into a list
+            #Changes string - into / according to test file
+            #Round up to 2 decimals
 
     def six_best_months(self):
         """
         Sorts out six months with highest averages
         :return:A list of tuple, containing month and corresponding average
         """
+        #Sort the list from highest to lowest then return the first six
         for a in range(0, len(self.monthly_averages_list)-1):
             for i in range(0, len(self.monthly_averages_list)-1):
                 if self.monthly_averages_list[i][1] < self.monthly_averages_list[i+1][1]:
                     self.monthly_averages_list[i], self.monthly_averages_list[i+1] = self.monthly_averages_list[i+1], self.monthly_averages_list[i]
         return self.monthly_averages_list[0:6]
 
+
     def six_worst_months(self):
         """
          Sorts out six months with lowest averages
         :return:A list of tuple, containing month and corresponding average
         """
+        #Sort the list from lowest to highest then return the first six
         for a in range(0, len(self.monthly_averages_list)-1):
             for i in range(0, len(self.monthly_averages_list)-1):
                 if self.monthly_averages_list[i][1] > self.monthly_averages_list[i+1][1]:
