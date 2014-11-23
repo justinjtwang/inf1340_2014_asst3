@@ -6,7 +6,7 @@ Assignment 3,INF1340 Fall 2014
 """
 
 __author__ = 'Xiwen Zhou, Juntian Wang,Susan Sim'
-__email__ = "xw.zhou@mail.utoronto.ca,,ses@drsusansim.org"
+__email__ = "xw.zhou@mail.utoronto.ca,justinjtwang@gmail.com,ses@drsusansim.org"
 
 __copyright__ = "2014 Susan Sim"
 __license__ = "MIT License"
@@ -52,10 +52,12 @@ class StockMiner:
                 self.dic_monthly[daily_data["Date"][0:7]][0] += daily_data["Close"]*daily_data["Volume"]
                 self.dic_monthly[daily_data["Date"][0:7]][1] += daily_data["Volume"]
             else:
-                self.dic_monthly[daily_data["Date"][0:7]] = [daily_data["Close"]*daily_data["Volume"], daily_data["Volume"]]
+                self.dic_monthly[daily_data["Date"][0:7]] = [daily_data["Close"]*daily_data["Volume"],
+                                                             daily_data["Volume"]]
 
         for month in self.dic_monthly:
-            self.monthly_averages_list.append((month.replace("-", "/"), round(self.dic_monthly[month][0] / self.dic_monthly[month][1], 2)))
+            self.monthly_averages_list.append((month.replace("-", "/"),
+                                               round(self.dic_monthly[month][0] / self.dic_monthly[month][1], 2)))
             #Caculates monthly averages and put them into a list
             #Changes string - into / according to test file
             #Round up to 2 decimals
@@ -69,7 +71,8 @@ class StockMiner:
         for a in range(0, len(self.monthly_averages_list)-1):
             for i in range(0, len(self.monthly_averages_list)-1):
                 if self.monthly_averages_list[i][1] < self.monthly_averages_list[i+1][1]:
-                    self.monthly_averages_list[i], self.monthly_averages_list[i+1] = self.monthly_averages_list[i+1], self.monthly_averages_list[i]
+                    self.monthly_averages_list[i], self.monthly_averages_list[i+1] = \
+                        self.monthly_averages_list[i+1], self.monthly_averages_list[i]
         return self.monthly_averages_list[0:6]
 
 
@@ -82,7 +85,8 @@ class StockMiner:
         for a in range(0, len(self.monthly_averages_list)-1):
             for i in range(0, len(self.monthly_averages_list)-1):
                 if self.monthly_averages_list[i][1] > self.monthly_averages_list[i+1][1]:
-                    self.monthly_averages_list[i], self.monthly_averages_list[i+1] = self.monthly_averages_list[i+1], self.monthly_averages_list[i]
+                    self.monthly_averages_list[i], self.monthly_averages_list[i+1] = \
+                        self.monthly_averages_list[i+1], self.monthly_averages_list[i]
         return self.monthly_averages_list[0:6]
 
 
