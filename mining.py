@@ -33,34 +33,27 @@ class StockMiner:
                 dic_monthly[daily_data["Date"][0:7]] = [daily_data["Close"]*daily_data["Volume"], daily_data["Volume"]]
 
         for month in dic_monthly:
-            monthly_averages_list.append(month, (dic_monthly[month][0] / dic_monthly[month][1]))
+            monthly_averages_list.append(month.replace("-", "/"), (dic_monthly[month][0] / dic_monthly[month][1]))
 
         #dic key是date value是两个需要用来使用的值 看起来像这样  “2005/07”：［VC, V］
 
         # 每个月的average  append在一个list里面
         return monthly_averages_list
 
-    def six_best_months(self,monthly_averages_list,six_best_list):
-            i = 0
+    def six_best_months(self,monthly_averages_list):
+        for i in range(0,len(monthly_averages_list)):
             if monthly_averages_list[i][1] < monthly_averages_list[i+1][1]:
+                monthly_averages_list[i],monthly_averages_list[i+1] = monthly_averages_list[i+1], monthly_averages_list[i]
+        return monthly_averages_list[0:6]
 
-
-
-
-
-
-        return [('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0)]
-
-
-    def six_worst_months():
-        return [('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0)]
-
+    def six_worst_months(self,monthly_averages_list):
+        for i in range(0,len(monthly_averages_list)):
+            if monthly_averages_list[i][1] > monthly_averages_list[i+1][1]:
+                monthly_averages_list[i],monthly_averages_list[i+1] = monthly_averages_list[i+1], monthly_averages_list[i]
+        return monthly_averages_list[0:6]
 
 def read_json_from_file(file_name):
     with open(file_name) as file_handle:
         file_contents = file_handle.read()
-
-
-
     return json.loads(file_contents)
 
