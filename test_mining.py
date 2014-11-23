@@ -13,7 +13,6 @@ __status__ = "Prototype"
 # imports one per line
 from mining import *
 
-
 def test_goog():
     read_stock_data("GOOG", "data/GOOG.json")
     assert six_best_months() == [('2007/12', 693.76), ('2007/11', 676.55), ('2007/10', 637.38), ('2008/01', 599.42),
