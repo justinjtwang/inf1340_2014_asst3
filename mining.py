@@ -90,7 +90,7 @@ class StockMiner:
         return self.monthly_averages_list[0:6]
 
 
-def read_stock_data(stock_file_name):
+def read_stock_data(stock_name, stock_file_name):
     """
     Manage data on monthly basis
     :param stock_file_name: json file
