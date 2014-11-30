@@ -105,7 +105,7 @@ class StockMiner:
 def read_stock_data(stock_name, stock_file_name):
     """
     Manage data on monthly basis
-    :param stock_name:a string, representing a json file
+    :param stock_name:string, representing a json file
     :param stock_file_name: json file
     """
     global stock
@@ -132,6 +132,14 @@ def six_worst_months():
 
 
 def compare_two_stocks(stock_name_1, stock_file_name_1, stock_name_2, stock_file_name_2):
+    """
+    Identify which of the two stock files has the higher standard deviation of monthly averages.
+    :param stock_name_1: string,representing a json file
+    :param stock_file_name_1: a json file,containing stock data
+    :param stock_name_2: string,representing a json file
+    :param stock_file_name_2: a json file,containing stock data
+    :return:string,file name of the file with higher standard deviation of monthly averages or "Equal"
+    """
     stock1 = StockMiner(stock_file_name_1)
     stock2 = StockMiner(stock_file_name_2)
     if stock1.standard_deviation() < stock2.standard_deviation():
