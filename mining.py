@@ -16,6 +16,7 @@ __status__ = "Prototype"
 # imports one per line
 import json
 import os.path
+import math
 
 
 def read_json_from_file(file_name):
@@ -40,6 +41,9 @@ class StockMiner:
         self.monthly_averages_list = []
         self.stock_data = read_json_from_file(stock_file_name)
         self.dic_monthly = {}
+        self.average = 0
+        self.deviation_list = []
+        self.sum = 0
 
     def month_averages(self):
         """
@@ -75,7 +79,6 @@ class StockMiner:
                         self.monthly_averages_list[i+1], self.monthly_averages_list[i]
         return self.monthly_averages_list[0:6]
 
-
     def six_worst_months(self):
         """
          Sorts out six months with lowest averages
@@ -89,10 +92,20 @@ class StockMiner:
                         self.monthly_averages_list[i+1], self.monthly_averages_list[i]
         return self.monthly_averages_list[0:6]
 
+    def standard_deviation(self):
+        self.month_averages()
+        for monthly_average in self.monthly_averages_list:
+            self.sum = self.sum + monthly_average[1]
+        self.average = self.sum/len(self.monthly_averages_list)
+        for monthly_average in self.monthly_averages_list:
+            self.deviation_list.append((monthly_average[1] - self.average) ** 2)
+        return round(math.sqrt(sum(self.deviation_list)/len(self.monthly_averages_list)),2)
+
 
 def read_stock_data(stock_name, stock_file_name):
     """
     Manage data on monthly basis
+    :param stock_name:a string, representing a json file
     :param stock_file_name: json file
     """
     global stock
@@ -116,3 +129,16 @@ def six_worst_months():
     """
     global stock
     return stock.six_worst_months()
+
+
+def compare_two_stocks(stock_name_1, stock_file_name_1, stock_name_2, stock_file_name_2):
+    stock1 = StockMiner(stock_file_name_1)
+    stock2 = StockMiner(stock_file_name_2)
+    if stock1.standard_deviation() < stock2.standard_deviation():
+        return stock_name_2
+    elif stock1.standard_deviation() > stock2.standard_deviation():
+        return stock_name_1
+    else:
+        return "Equal"
+
+
