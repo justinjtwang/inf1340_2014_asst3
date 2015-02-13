@@ -80,7 +80,7 @@ class StockMiner:
         return self.monthly_averages_list[0:6]
 
     def six_worst_months(self):
-        """
+        """cxc
          Sorts out six months with lowest averages
         :return:A list of tuple, containing month and corresponding average
         """
